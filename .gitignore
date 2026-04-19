@@ -1,0 +1,37 @@
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Generated outputs
+output.json
+parsed_document.json
+analysis_results.json
+dashboard.html
+annual_report_parsed.json
+annual_report_analysis.json
+annual_report_summary.txt
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Claude settings (may contain local paths)
+.claude/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/

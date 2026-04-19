@@ -1,0 +1,153 @@
+╔═══════════════════════════════════════════════════════════════════╗
+║           SAP FI/CO Analysis Agent - Quick Reference              ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+📊 BASIC USAGE
+═══════════════════════════════════════════════════════════════════
+
+Analysis Only:
+  python3 main.py your_report.pdf
+
+Analysis + Interactive Q&A:
+  python3 main_with_qa.py your_report.pdf --interactive
+
+Q&A Only (after analysis):
+  python3 interactive_qa.py parsed_document.json analysis_results.json
+
+View Demo (no API needed):
+  open demo_dashboard.html
+  python3 demo_qa.py
+
+───────────────────────────────────────────────────────────────────
+
+💬 EXAMPLE Q&A QUESTIONS
+═══════════════════════════════════════════════════════════════════
+
+Performance:
+  "What's the overall financial performance?"
+  "What are the top 3 financial issues?"
+  "Is the company profitable?"
+
+Deep Dive:
+  "Why did material costs exceed budget?"
+  "Which operating expenses are over budget?"
+  "What's causing the margin compression?"
+
+Actions:
+  "What should management do immediately?"
+  "How can we improve profitability?"
+  "Which cost centers need attention?"
+
+Calculations:
+  "What's the gross margin percentage?"
+  "Calculate the operating margin"
+  "What's COGS as % of revenue?"
+
+Comparisons:
+  "Which GL accounts have largest variances?"
+  "Is product revenue better than services?"
+  "What's the biggest driver of profit miss?"
+
+───────────────────────────────────────────────────────────────────
+
+📁 OUTPUT FILES
+═══════════════════════════════════════════════════════════════════
+
+After running analysis:
+  parsed_document.json     → Extracted document data
+  analysis_results.json    → Full agent analysis
+  dashboard.html           → Visual dashboard (open in browser)
+
+───────────────────────────────────────────────────────────────────
+
+💰 COSTS
+═══════════════════════════════════════════════════════════════════
+
+Per analysis:        ~11,000 tokens  (~$0.12)
+Per Q&A question:    ~3,000 tokens   (~$0.03)
+Full session:        ~40,000 tokens  (~$0.40)
+
+Monthly (typical):   16 sessions     (~$6.50)
+Alternative cost:    Analyst time    ($1,250)
+Savings:             99.5%
+
+───────────────────────────────────────────────────────────────────
+
+⚡ QUICK COMMANDS
+═══════════════════════════════════════════════════════════════════
+
+Generate sample PDF:
+  python3 create_sample_pdf.py
+
+Test with sample:
+  python3 main_with_qa.py samples/sap_variance_report.pdf -i
+
+Show Q&A examples:
+  python3 demo_qa.py
+
+Check dependencies:
+  pip3 list | grep -E "(anthropic|pypdf2|jinja2)"
+
+───────────────────────────────────────────────────────────────────
+
+📚 DOCUMENTATION
+═══════════════════════════════════════════════════════════════════
+
+SUMMARY.md        → Complete feature overview & use cases
+QUICKSTART.md     → Getting started guide
+QA_GUIDE.md       → 70+ Q&A examples & tips
+README.md         → Full technical documentation
+
+───────────────────────────────────────────────────────────────────
+
+🔧 TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════
+
+"API key not found"
+  → Check .env file has ANTHROPIC_API_KEY=sk-ant-...
+
+"Credit balance too low"
+  → Add credits at console.anthropic.com/settings/plans
+
+"No document data"
+  → Run analysis first: python3 main.py your_report.pdf
+
+Q&A seems generic
+  → Make sure you passed analysis_results.json for full context
+
+───────────────────────────────────────────────────────────────────
+
+🎯 INTERACTIVE MODE COMMANDS
+═══════════════════════════════════════════════════════════════════
+
+exit, quit, q    → End Q&A session
+reset            → Clear conversation history
+summary          → Show question count
+[question text]  → Ask your question
+
+───────────────────────────────────────────────────────────────────
+
+✨ KEY FEATURES
+═══════════════════════════════════════════════════════════════════
+
+✓ Automated anomaly detection
+✓ Variance analysis with root causes
+✓ CFO-ready executive summaries
+✓ Interactive Q&A - ask anything!
+✓ Context-aware conversations
+✓ Instant calculations
+✓ Actionable recommendations
+✓ Beautiful HTML dashboards
+
+───────────────────────────────────────────────────────────────────
+
+🚀 NEXT STEPS
+═══════════════════════════════════════════════════════════════════
+
+1. Add API credits (if needed)
+2. Try: python3 main_with_qa.py samples/sap_variance_report.pdf -i
+3. Ask questions about the data
+4. Test with your own SAP reports
+5. Review demo_dashboard.html for sample output
+
+═══════════════════════════════════════════════════════════════════

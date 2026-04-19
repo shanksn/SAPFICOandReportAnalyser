@@ -1,0 +1,205 @@
+{
+  "timestamp": "2026-04-15 13:05:45",
+  "results": {
+    "anomaly_detection": {
+      "success": true,
+      "content": "```json\n{\n  \"anomalies_found\": true,\n  \"critical_issues\": [\n    {\n      \"type\": \"outlier\",\n      \"severity\": \"high\",\n      \"description\": \"Material costs (GL 5000) are 15.3% over budget ($130k variance) - highest cost overrun\",\n      \"account\": \"5000 - Cost of Goods Sold - Materials\",\n      \"amount\": \"$980,000 (Budget: $850,000)\",\n      \"recommendation\": \"Investigate supplier pricing changes and material waste. Review procurement contracts for potential cost savings.\"\n    },\n    {\n      \"type\": \"pattern\",\n      \"severity\": \"high\",\n      \"description\": \"Professional Fees (GL 6400) exceeded budget by 25% - unusual spike in consulting spend\",\n      \"account\": \"6400 - Professional Fees\",\n      \"amount\": \"$75,000 (Budget: $60,000)\",\n      \"recommendation\": \"Review all professional service contracts. Ensure proper approval process for external consultants.\"\n    },\n    {\n      \"type\": \"pattern\",\n      \"severity\": \"medium\",\n      \"description\": \"Marketing spend (GL 6300) 20% over budget - may indicate unplanned campaigns or inefficient spend\",\n      \"account\": \"6300 - Marketing & Advertising\",\n      \"amount\": \"$180,000 (Budget: $150,000)\",\n      \"recommendation\": \"Analyze marketing ROI by campaign. Consider pausing low-performing initiatives.\"\n    },\n    {\n      \"type\": \"control_violation\",\n      \"severity\": \"medium\",\n      \"description\": \"Foreign Exchange Loss (GL 7200) of $12k with no budget allocation - indicates unhedged FX exposure\",\n      \"account\": \"7200 - Foreign Exchange Gain/Loss\",\n      \"amount\": \"-$12,000 (Budget: $0)\",\n      \"recommendation\": \"Implement FX hedging strategy for foreign currency transactions. Review treasury policies.\"\n    }\n  ],\n  \"summary\": \"Detected 4 material anomalies requiring management attention. Primary concerns are COGS overruns (materials up 15.3%) and unbudgeted professional fees/marketing spend. FX controls need strengthening.\"\n}\n```",
+      "usage": {
+        "input_tokens": 3200,
+        "output_tokens": 450
+      },
+      "parsed_output": {
+        "anomalies_found": true,
+        "critical_issues": [
+          {
+            "type": "outlier",
+            "severity": "high",
+            "description": "Material costs (GL 5000) are 15.3% over budget ($130k variance) - highest cost overrun",
+            "account": "5000 - Cost of Goods Sold - Materials",
+            "amount": "$980,000 (Budget: $850,000)",
+            "recommendation": "Investigate supplier pricing changes and material waste. Review procurement contracts for potential cost savings."
+          },
+          {
+            "type": "pattern",
+            "severity": "high",
+            "description": "Professional Fees (GL 6400) exceeded budget by 25% - unusual spike in consulting spend",
+            "account": "6400 - Professional Fees",
+            "amount": "$75,000 (Budget: $60,000)",
+            "recommendation": "Review all professional service contracts. Ensure proper approval process for external consultants."
+          },
+          {
+            "type": "pattern",
+            "severity": "medium",
+            "description": "Marketing spend (GL 6300) 20% over budget - may indicate unplanned campaigns or inefficient spend",
+            "account": "6300 - Marketing & Advertising",
+            "amount": "$180,000 (Budget: $150,000)",
+            "recommendation": "Analyze marketing ROI by campaign. Consider pausing low-performing initiatives."
+          },
+          {
+            "type": "control_violation",
+            "severity": "medium",
+            "description": "Foreign Exchange Loss (GL 7200) of $12k with no budget allocation - indicates unhedged FX exposure",
+            "account": "7200 - Foreign Exchange Gain/Loss",
+            "amount": "-$12,000 (Budget: $0)",
+            "recommendation": "Implement FX hedging strategy for foreign currency transactions. Review treasury policies."
+          }
+        ],
+        "summary": "Detected 4 material anomalies requiring management attention. Primary concerns are COGS overruns (materials up 15.3%) and unbudgeted professional fees/marketing spend. FX controls need strengthening."
+      }
+    },
+    "variance_analysis": {
+      "success": true,
+      "content": "```json\n{\n  \"variances\": [\n    {\n      \"account_category\": \"Revenue\",\n      \"account_name\": \"Sales Revenue - Products\",\n      \"actual\": 2450000,\n      \"plan\": 2200000,\n      \"variance_amount\": 250000,\n      \"variance_percent\": 11.4,\n      \"favorable\": true,\n      \"materiality\": \"high\",\n      \"explanation\": \"Product sales beat expectations by 11.4%, likely driven by strong Q1 demand and successful product launches in January-February timeframe\",\n      \"action_required\": \"Maintain momentum - ensure inventory levels can support continued demand\"\n    },\n    {\n      \"account_category\": \"Revenue\",\n      \"account_name\": \"Sales Revenue - Services\",\n      \"actual\": 890000,\n      \"plan\": 950000,\n      \"variance_amount\": -60000,\n      \"variance_percent\": -6.3,\n      \"favorable\": false,\n      \"materiality\": \"medium\",\n      \"explanation\": \"Service revenue fell short by 6.3% ($60k). Possible causes: delayed project starts, customer churn, or sales pipeline gaps\",\n      \"action_required\": \"Review service backlog and renewal rates. Accelerate sales pipeline conversion\"\n    },\n    {\n      \"account_category\": \"COGS\",\n      \"account_name\": \"Cost of Goods Sold - Materials\",\n      \"actual\": 980000,\n      \"plan\": 850000,\n      \"variance_amount\": -130000,\n      \"variance_percent\": -15.3,\n      \"favorable\": false,\n      \"materiality\": \"high\",\n      \"explanation\": \"Materials cost 15.3% over budget - most significant variance. Driven by combination of higher unit prices (supplier increases) and potentially higher material waste/scrap rates\",\n      \"action_required\": \"URGENT: Negotiate with suppliers for better pricing. Conduct material waste analysis\"\n    },\n    {\n      \"account_category\": \"Operating Expense\",\n      \"account_name\": \"IT & Software Licenses\",\n      \"actual\": 95000,\n      \"plan\": 80000,\n      \"variance_amount\": -15000,\n      \"variance_percent\": -18.8,\n      \"favorable\": false,\n      \"materiality\": \"medium\",\n      \"explanation\": \"IT costs 18.8% over budget, likely due to new software subscriptions or license true-ups not captured in original budget\",\n      \"action_required\": \"Review all SaaS subscriptions. Optimize license counts and eliminate unused tools\"\n    },\n    {\n      \"account_category\": \"Operating Expense\",\n      \"account_name\": \"Marketing & Advertising\",\n      \"actual\": 180000,\n      \"plan\": 150000,\n      \"variance_amount\": -30000,\n      \"variance_percent\": -20.0,\n      \"favorable\": false,\n      \"materiality\": \"medium\",\n      \"explanation\": \"Marketing overspent by 20%, possibly supporting product launch campaigns or responding to competitive pressure\",\n      \"action_required\": \"Measure campaign ROI. Cut low-performing channels and reallocate budget\"\n    },\n    {\n      \"account_category\": \"Operating Expense\",\n      \"account_name\": \"Professional Fees\",\n      \"actual\": 75000,\n      \"plan\": 60000,\n      \"variance_amount\": -15000,\n      \"variance_percent\": -25.0,\n      \"favorable\": false,\n      \"materiality\": \"medium\",\n      \"explanation\": \"Professional fees 25% over budget - likely unplanned legal/consulting work. May relate to M&A, litigation, or compliance projects\",\n      \"action_required\": \"Review SOWs for all professional service providers. Approve large engagements in advance\"\n    }\n  ],\n  \"summary\": \"Overall variance story: Strong product revenue (+11.4%) offset by service shortfall (-6.3%), resulting in 6.1% revenue beat. However, COGS significantly exceeded plan (-11.4%), primarily due to material cost inflation. OpEx also ran over budget (-7.9%), driven by marketing, IT, and professional fees. Net result: Operating profit missed budget by 11.9% despite revenue growth - a margin compression story requiring immediate cost control action.\"\n}\n```",
+      "usage": {
+        "input_tokens": 3200,
+        "output_tokens": 850
+      },
+      "parsed_output": {
+        "variances": [
+          {
+            "account_category": "Revenue",
+            "account_name": "Sales Revenue - Products",
+            "actual": 2450000,
+            "plan": 2200000,
+            "variance_amount": 250000,
+            "variance_percent": 11.4,
+            "favorable": true,
+            "materiality": "high",
+            "explanation": "Product sales beat expectations by 11.4%, likely driven by strong Q1 demand and successful product launches in January-February timeframe",
+            "action_required": "Maintain momentum - ensure inventory levels can support continued demand"
+          },
+          {
+            "account_category": "Revenue",
+            "account_name": "Sales Revenue - Services",
+            "actual": 890000,
+            "plan": 950000,
+            "variance_amount": -60000,
+            "variance_percent": -6.3,
+            "favorable": false,
+            "materiality": "medium",
+            "explanation": "Service revenue fell short by 6.3% ($60k). Possible causes: delayed project starts, customer churn, or sales pipeline gaps",
+            "action_required": "Review service backlog and renewal rates. Accelerate sales pipeline conversion"
+          },
+          {
+            "account_category": "COGS",
+            "account_name": "Cost of Goods Sold - Materials",
+            "actual": 980000,
+            "plan": 850000,
+            "variance_amount": -130000,
+            "variance_percent": -15.3,
+            "favorable": false,
+            "materiality": "high",
+            "explanation": "Materials cost 15.3% over budget - most significant variance. Driven by combination of higher unit prices (supplier increases) and potentially higher material waste/scrap rates",
+            "action_required": "URGENT: Negotiate with suppliers for better pricing. Conduct material waste analysis"
+          },
+          {
+            "account_category": "Operating Expense",
+            "account_name": "IT & Software Licenses",
+            "actual": 95000,
+            "plan": 80000,
+            "variance_amount": -15000,
+            "variance_percent": -18.8,
+            "favorable": false,
+            "materiality": "medium",
+            "explanation": "IT costs 18.8% over budget, likely due to new software subscriptions or license true-ups not captured in original budget",
+            "action_required": "Review all SaaS subscriptions. Optimize license counts and eliminate unused tools"
+          },
+          {
+            "account_category": "Operating Expense",
+            "account_name": "Marketing & Advertising",
+            "actual": 180000,
+            "plan": 150000,
+            "variance_amount": -30000,
+            "variance_percent": -20.0,
+            "favorable": false,
+            "materiality": "medium",
+            "explanation": "Marketing overspent by 20%, possibly supporting product launch campaigns or responding to competitive pressure",
+            "action_required": "Measure campaign ROI. Cut low-performing channels and reallocate budget"
+          },
+          {
+            "account_category": "Operating Expense",
+            "account_name": "Professional Fees",
+            "actual": 75000,
+            "plan": 60000,
+            "variance_amount": -15000,
+            "variance_percent": -25.0,
+            "favorable": false,
+            "materiality": "medium",
+            "explanation": "Professional fees 25% over budget - likely unplanned legal/consulting work. May relate to M&A, litigation, or compliance projects",
+            "action_required": "Review SOWs for all professional service providers. Approve large engagements in advance"
+          }
+        ],
+        "summary": "Overall variance story: Strong product revenue (+11.4%) offset by service shortfall (-6.3%), resulting in 6.1% revenue beat. However, COGS significantly exceeded plan (-11.4%), primarily due to material cost inflation. OpEx also ran over budget (-7.9%), driven by marketing, IT, and professional fees. Net result: Operating profit missed budget by 11.9% despite revenue growth - a margin compression story requiring immediate cost control action."
+      }
+    },
+    "executive_summary": {
+      "success": true,
+      "content": "```json\n{\n  \"executive_summary\": {\n    \"headline\": \"Q1 2024: Revenue beat by 6.1% offset by 11.4% COGS overrun and 7.9% OpEx overspend, resulting in 11.9% operating profit miss\",\n    \"key_metrics\": [\n      {\n        \"metric\": \"Total Revenue\",\n        \"value\": \"$3.39M (vs $3.19M budget)\",\n        \"trend\": \"up\",\n        \"commentary\": \"+6.1% driven by strong product sales (+11.4%), partially offset by service shortfall (-6.3%)\"\n      },\n      {\n        \"metric\": \"Gross Margin\",\n        \"value\": \"52.3% (vs 54.5% budget)\",\n        \"trend\": \"down\",\n        \"commentary\": \"Margin compression of 220bps due to material cost inflation (COGS +11.4%)\"\n      },\n      {\n        \"metric\": \"Operating Profit\",\n        \"value\": \"$480k (vs $545k budget)\",\n        \"trend\": \"down\",\n        \"commentary\": \"Missed budget by $65k (-11.9%) despite revenue growth\"\n      },\n      {\n        \"metric\": \"Net Profit\",\n        \"value\": \"$338k (vs $398k budget)\",\n        \"trend\": \"down\",\n        \"commentary\": \"14.9% below plan, with net margin at 10.0% (vs 12.5% budget)\"\n      }\n    ],\n    \"critical_issues\": [\n      \"Material costs $130k over budget (+15.3%) - urgent supplier negotiation and waste reduction required\",\n      \"Professional fees spiked 25% over budget ($15k) - consulting spend needs tighter controls\",\n      \"Marketing overspent by 20% ($30k) - ROI analysis needed to optimize spend\",\n      \"Foreign exchange loss of $12k unhedged - treasury needs FX risk management strategy\"\n    ],\n    \"key_achievements\": [\n      \"Product revenue exceeded target by $250k (+11.4%) - strong market demand\",\n      \"Gross profit delivered $30k above budget despite COGS pressure\",\n      \"Operating expenses on payroll, rent, and depreciation held to budget - good cost discipline\"\n    ],\n    \"recommendations\": [\n      \"Immediate action: Launch material cost reduction initiative (target: 5-7% savings through supplier negotiations and waste reduction)\",\n      \"Implement pre-approval process for all professional service engagements >$10k\",\n      \"Conduct marketing spend effectiveness review - cut bottom 20% of campaigns by ROI\",\n      \"Address service revenue gap - accelerate pipeline conversion and review pricing strategy\",\n      \"Establish FX hedging policy for transactions >$50k\"\n    ],\n    \"overall_assessment\": \"Mixed quarter: Revenue growth is positive but insufficient to offset cost pressures. The business is experiencing margin compression from material inflation and OpEx creep. Immediate cost control actions required in procurement, professional services, and marketing to restore profitability to plan levels. Service revenue weakness also needs urgent attention to prevent trend continuation into Q2.\"\n  }\n}\n```",
+      "usage": {
+        "input_tokens": 3200,
+        "output_tokens": 750
+      },
+      "parsed_output": {
+        "executive_summary": {
+          "headline": "Q1 2024: Revenue beat by 6.1% offset by 11.4% COGS overrun and 7.9% OpEx overspend, resulting in 11.9% operating profit miss",
+          "key_metrics": [
+            {
+              "metric": "Total Revenue",
+              "value": "$3.39M (vs $3.19M budget)",
+              "trend": "up",
+              "commentary": "+6.1% driven by strong product sales (+11.4%), partially offset by service shortfall (-6.3%)"
+            },
+            {
+              "metric": "Gross Margin",
+              "value": "52.3% (vs 54.5% budget)",
+              "trend": "down",
+              "commentary": "Margin compression of 220bps due to material cost inflation (COGS +11.4%)"
+            },
+            {
+              "metric": "Operating Profit",
+              "value": "$480k (vs $545k budget)",
+              "trend": "down",
+              "commentary": "Missed budget by $65k (-11.9%) despite revenue growth"
+            },
+            {
+              "metric": "Net Profit",
+              "value": "$338k (vs $398k budget)",
+              "trend": "down",
+              "commentary": "14.9% below plan, with net margin at 10.0% (vs 12.5% budget)"
+            }
+          ],
+          "critical_issues": [
+            "Material costs $130k over budget (+15.3%) - urgent supplier negotiation and waste reduction required",
+            "Professional fees spiked 25% over budget ($15k) - consulting spend needs tighter controls",
+            "Marketing overspent by 20% ($30k) - ROI analysis needed to optimize spend",
+            "Foreign exchange loss of $12k unhedged - treasury needs FX risk management strategy"
+          ],
+          "key_achievements": [
+            "Product revenue exceeded target by $250k (+11.4%) - strong market demand",
+            "Gross profit delivered $30k above budget despite COGS pressure",
+            "Operating expenses on payroll, rent, and depreciation held to budget - good cost discipline"
+          ],
+          "recommendations": [
+            "Immediate action: Launch material cost reduction initiative (target: 5-7% savings through supplier negotiations and waste reduction)",
+            "Implement pre-approval process for all professional service engagements >$10k",
+            "Conduct marketing spend effectiveness review - cut bottom 20% of campaigns by ROI",
+            "Address service revenue gap - accelerate pipeline conversion and review pricing strategy",
+            "Establish FX hedging policy for transactions >$50k"
+          ],
+          "overall_assessment": "Mixed quarter: Revenue growth is positive but insufficient to offset cost pressures. The business is experiencing margin compression from material inflation and OpEx creep. Immediate cost control actions required in procurement, professional services, and marketing to restore profitability to plan levels. Service revenue weakness also needs urgent attention to prevent trend continuation into Q2."
+        }
+      }
+    },
+    "metadata": {
+      "document_type": "Variance Report",
+      "company_code": "1000",
+      "period": "03",
+      "fiscal_year": "2024"
+    },
+    "total_usage": {
+      "input_tokens": 9600,
+      "output_tokens": 2050,
+      "total_tokens": 11650
+    }
+  }
+}

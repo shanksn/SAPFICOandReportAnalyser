@@ -1,0 +1,101 @@
+╔═══════════════════════════════════════════════════════════════════╗
+║         SAP FI/CO Agent - Organized File Structure                ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+📂 ROOT DIRECTORY (14 files - clean and essential)
+═══════════════════════════════════════════════════════════════════
+
+📄 Getting Started
+  ├─ START_HERE.md              ← READ THIS FIRST!
+  ├─ FILE_STRUCTURE.md          ← What each file does
+  └─ .env                       ← Your API keys
+
+🔧 Core Pipeline (8 Python files)
+  ├─ main.py                    ← SAP report analysis
+  ├─ main_with_qa.py            ← Analysis + Q&A mode
+  ├─ analyze_annual_report.py   ← Annual reports (any company!)
+  ├─ config.py                  ← Settings & SAP context
+  ├─ agents.py                  ← 3 AI agents
+  ├─ document_ingestion.py      ← PDF parser (PyPDF2)
+  ├─ document_ingestion_enhanced.py  ← Enhanced parser (LlamaParse)
+  ├─ interactive_qa.py          ← Q&A engine
+  └─ output_generator.py        ← Dashboard generator
+
+📦 Configuration
+  └─ requirements.txt           ← Dependencies
+
+📁 Sample Data
+  └─ samples/
+      └─ sap_variance_report.pdf
+
+
+📁 ARCHIVE (all demos & docs)
+═══════════════════════════════════════════════════════════════════
+
+archive/
+  ├─ demos/                     ← Demo scripts (5 files)
+  │   ├─ demo_qa.py
+  │   ├─ create_demo_output.py
+  │   ├─ create_sample_pdf.py
+  │   ├─ demo_dashboard.html
+  │   └─ demo_analysis_results.json
+  │
+  ├─ docs/                      ← Full documentation (8 files)
+  │   ├─ README.md              (Complete technical docs)
+  │   ├─ QUICKSTART.md          (Getting started)
+  │   ├─ QA_GUIDE.md            (70+ example questions)
+  │   ├─ UPGRADE_GUIDE.md       (LlamaParse setup)
+  │   ├─ EMBEDDING_GUIDE.md     (Embedding models)
+  │   ├─ SUMMARY.md             (Feature summary)
+  │   ├─ QUICK_REFERENCE.txt    (Command reference)
+  │   └─ setup_enhanced.sh      (Setup script)
+  │
+  └─ (Generated output files moved here automatically)
+
+
+═══════════════════════════════════════════════════════════════════
+DAILY USAGE - Only These Commands:
+═══════════════════════════════════════════════════════════════════
+
+1. SAP Report Analysis:
+   python3 main_with_qa.py your_report.pdf --interactive
+
+2. Annual Report Analysis (any company):
+   python3 analyze_annual_report.py company_10k.pdf --interactive
+
+3. View Results:
+   open dashboard.html
+
+That's it! Clean, simple, focused.
+
+═══════════════════════════════════════════════════════════════════
+WHAT YOU CAN ANALYZE:
+═══════════════════════════════════════════════════════════════════
+
+✅ SAP FI/CO reports (P&L, Trial Balance, Cost Center, etc.)
+✅ Annual reports (10-K, 10-Q) - ANY company!
+✅ Financial statements
+✅ Investor presentations
+✅ Quarterly earnings reports
+✅ Management reports
+✅ Budget variance reports
+
+Then ask questions:
+  "What are the key financial issues?"
+  "Why did costs exceed budget?"
+  "What's the revenue growth rate?"
+  "What are the main risks?"
+  "Calculate the profit margin"
+
+═══════════════════════════════════════════════════════════════════
+BEFORE/AFTER:
+═══════════════════════════════════════════════════════════════════
+
+Before: 25+ files in root (confusing!)
+After:  14 files in root (clean & focused!)
+
+All demos → archive/demos/
+All docs  → archive/docs/
+All output → auto-archived after generation
+
+═══════════════════════════════════════════════════════════════════

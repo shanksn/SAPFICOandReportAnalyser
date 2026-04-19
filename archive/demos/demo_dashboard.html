@@ -1,0 +1,550 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAP FI/CO Analysis Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #2c3e50;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .metadata {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            opacity: 0.95;
+        }
+        .metadata-item {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card.full-width {
+            grid-column: 1 / -1;
+        }
+        .metric {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .metric:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .metric-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .metric-value {
+            font-size: 14px;
+            color: #7f8c8d;
+            line-height: 1.5;
+        }
+        .issue {
+            background: #fff5f5;
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .issue.medium {
+            background: #fffbf0;
+            border-left-color: #f39c12;
+        }
+        .issue.low {
+            background: #f0f9ff;
+            border-left-color: #3498db;
+        }
+        .issue-type {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        .issue.medium .issue-type {
+            color: #f39c12;
+        }
+        .issue.low .issue-type {
+            color: #3498db;
+        }
+        .variance {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .variance.favorable {
+            background: #d4edda;
+            border-left: 3px solid #28a745;
+        }
+        .variance.unfavorable {
+            background: #f8d7da;
+            border-left: 3px solid #dc3545;
+        }
+        .variance-info {
+            flex: 1;
+        }
+        .variance-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        .variance-explanation {
+            font-size: 13px;
+            color: #6c757d;
+        }
+        .variance-amount {
+            font-weight: 700;
+            font-size: 18px;
+            text-align: right;
+            min-width: 120px;
+        }
+        .no-data {
+            text-align: center;
+            padding: 30px;
+            color: #95a5a6;
+            font-style: italic;
+        }
+        .achievement {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .recommendation {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .headline {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #e8f4f8;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #95a5a6;
+            font-size: 13px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge-high {
+            background: #fee;
+            color: #c33;
+        }
+        .badge-medium {
+            background: #ffeeba;
+            color: #856404;
+        }
+        .badge-low {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 SAP FI/CO Analysis Dashboard</h1>
+            <div class="metadata">
+                <div class="metadata-item">🕐 Generated: 2026-04-15 13:05:45</div>
+                
+                <div class="metadata-item">📄 Variance Report</div>
+                
+                
+                <div class="metadata-item">🏢 Company: 1000</div>
+                
+                
+                <div class="metadata-item">📅 Period: 03/2024</div>
+                
+                
+                <div class="metadata-item">🤖 AI Tokens: 11,650</div>
+                
+            </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <div class="card full-width">
+            <h2>📋 Executive Summary</h2>
+            
+                <div class="headline">Q1 2024: Revenue beat by 6.1% offset by 11.4% COGS overrun and 7.9% OpEx overspend, resulting in 11.9% operating profit miss</div>
+
+                
+                <h3 style="margin: 20px 0 10px 0; font-size: 16px;">Key Metrics</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                    
+                    <div class="metric">
+                        <div class="metric-header">Total Revenue</div>
+                        <div class="metric-value">
+                            <strong>$3.39M (vs $3.19M budget)</strong>
+                            📈
+                            <br>+6.1% driven by strong product sales (+11.4%), partially offset by service shortfall (-6.3%)
+                        </div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-header">Gross Margin</div>
+                        <div class="metric-value">
+                            <strong>52.3% (vs 54.5% budget)</strong>
+                            📉
+                            <br>Margin compression of 220bps due to material cost inflation (COGS +11.4%)
+                        </div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-header">Operating Profit</div>
+                        <div class="metric-value">
+                            <strong>$480k (vs $545k budget)</strong>
+                            📉
+                            <br>Missed budget by $65k (-11.9%) despite revenue growth
+                        </div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-header">Net Profit</div>
+                        <div class="metric-value">
+                            <strong>$338k (vs $398k budget)</strong>
+                            📉
+                            <br>14.9% below plan, with net margin at 10.0% (vs 12.5% budget)
+                        </div>
+                    </div>
+                    
+                </div>
+                
+
+                
+                <h3 style="margin: 20px 0 10px 0; font-size: 16px;">✓ Key Achievements</h3>
+                
+                <div class="achievement">Product revenue exceeded target by $250k (+11.4%) - strong market demand</div>
+                
+                <div class="achievement">Gross profit delivered $30k above budget despite COGS pressure</div>
+                
+                <div class="achievement">Operating expenses on payroll, rent, and depreciation held to budget - good cost discipline</div>
+                
+                
+
+                
+                <h3 style="margin: 20px 0 10px 0; font-size: 16px;">⚠️ Critical Issues</h3>
+                
+                <div class="issue">Material costs $130k over budget (+15.3%) - urgent supplier negotiation and waste reduction required</div>
+                
+                <div class="issue">Professional fees spiked 25% over budget ($15k) - consulting spend needs tighter controls</div>
+                
+                <div class="issue">Marketing overspent by 20% ($30k) - ROI analysis needed to optimize spend</div>
+                
+                <div class="issue">Foreign exchange loss of $12k unhedged - treasury needs FX risk management strategy</div>
+                
+                
+
+                
+                <h3 style="margin: 20px 0 10px 0; font-size: 16px;">💡 Recommendations</h3>
+                
+                <div class="recommendation">Immediate action: Launch material cost reduction initiative (target: 5-7% savings through supplier negotiations and waste reduction)</div>
+                
+                <div class="recommendation">Implement pre-approval process for all professional service engagements >$10k</div>
+                
+                <div class="recommendation">Conduct marketing spend effectiveness review - cut bottom 20% of campaigns by ROI</div>
+                
+                <div class="recommendation">Address service revenue gap - accelerate pipeline conversion and review pricing strategy</div>
+                
+                <div class="recommendation">Establish FX hedging policy for transactions >$50k</div>
+                
+                
+
+                
+                <h3 style="margin: 20px 0 10px 0; font-size: 16px;">Overall Assessment</h3>
+                <p style="line-height: 1.6; color: #555;">Mixed quarter: Revenue growth is positive but insufficient to offset cost pressures. The business is experiencing margin compression from material inflation and OpEx creep. Immediate cost control actions required in procurement, professional services, and marketing to restore profitability to plan levels. Service revenue weakness also needs urgent attention to prevent trend continuation into Q2.</p>
+                
+            
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Anomaly Detection -->
+            <div class="card">
+                <h2>🔍 Anomaly Detection</h2>
+                
+                    
+                    <div class="issue high">
+                        <div class="issue-type">
+                            <span class="badge badge-high">high</span>
+                            outlier
+                        </div>
+                        <div style="margin: 8px 0; font-weight: 500;">Material costs (GL 5000) are 15.3% over budget ($130k variance) - highest cost overrun</div>
+                        
+                        <div style="font-size: 13px; color: #666;">Account: 5000 - Cost of Goods Sold - Materials</div>
+                        
+                        
+                        <div style="font-size: 13px; color: #666;">Amount: $980,000 (Budget: $850,000)</div>
+                        
+                        
+                        <div style="margin-top: 8px; font-size: 13px; font-style: italic; color: #555;">
+                            → Investigate supplier pricing changes and material waste. Review procurement contracts for potential cost savings.
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="issue high">
+                        <div class="issue-type">
+                            <span class="badge badge-high">high</span>
+                            pattern
+                        </div>
+                        <div style="margin: 8px 0; font-weight: 500;">Professional Fees (GL 6400) exceeded budget by 25% - unusual spike in consulting spend</div>
+                        
+                        <div style="font-size: 13px; color: #666;">Account: 6400 - Professional Fees</div>
+                        
+                        
+                        <div style="font-size: 13px; color: #666;">Amount: $75,000 (Budget: $60,000)</div>
+                        
+                        
+                        <div style="margin-top: 8px; font-size: 13px; font-style: italic; color: #555;">
+                            → Review all professional service contracts. Ensure proper approval process for external consultants.
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="issue medium">
+                        <div class="issue-type">
+                            <span class="badge badge-medium">medium</span>
+                            pattern
+                        </div>
+                        <div style="margin: 8px 0; font-weight: 500;">Marketing spend (GL 6300) 20% over budget - may indicate unplanned campaigns or inefficient spend</div>
+                        
+                        <div style="font-size: 13px; color: #666;">Account: 6300 - Marketing & Advertising</div>
+                        
+                        
+                        <div style="font-size: 13px; color: #666;">Amount: $180,000 (Budget: $150,000)</div>
+                        
+                        
+                        <div style="margin-top: 8px; font-size: 13px; font-style: italic; color: #555;">
+                            → Analyze marketing ROI by campaign. Consider pausing low-performing initiatives.
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="issue medium">
+                        <div class="issue-type">
+                            <span class="badge badge-medium">medium</span>
+                            control violation
+                        </div>
+                        <div style="margin: 8px 0; font-weight: 500;">Foreign Exchange Loss (GL 7200) of $12k with no budget allocation - indicates unhedged FX exposure</div>
+                        
+                        <div style="font-size: 13px; color: #666;">Account: 7200 - Foreign Exchange Gain/Loss</div>
+                        
+                        
+                        <div style="font-size: 13px; color: #666;">Amount: -$12,000 (Budget: $0)</div>
+                        
+                        
+                        <div style="margin-top: 8px; font-size: 13px; font-style: italic; color: #555;">
+                            → Implement FX hedging strategy for foreign currency transactions. Review treasury policies.
+                        </div>
+                        
+                    </div>
+                    
+                    
+                    <div style="margin-top: 15px; padding: 12px; background: #f8f9fa; border-radius: 5px; font-size: 14px;">
+                        <strong>Summary:</strong> Detected 4 material anomalies requiring management attention. Primary concerns are COGS overruns (materials up 15.3%) and unbudgeted professional fees/marketing spend. FX controls need strengthening.
+                    </div>
+                    
+                
+            </div>
+
+            <!-- Variance Analysis -->
+            <div class="card">
+                <h2>📊 Variance Analysis</h2>
+                
+                    
+                    <div class="variance favorable">
+                        <div class="variance-info">
+                            <div class="variance-name">Sales Revenue - Products</div>
+                            <div class="variance-explanation">Product sales beat expectations by 11.4%, likely driven by strong Q1 demand and successful product launches in January-February timeframe</div>
+                            
+                            <div style="margin-top: 5px; font-size: 12px; font-weight: 600; color: #333;">
+                                Action: Maintain momentum - ensure inventory levels can support continued demand
+                            </div>
+                            
+                        </div>
+                        <div class="variance-amount">
+                            11.4%
+                            <div style="font-size: 13px; font-weight: normal; color: #666;">
+                                $250,000
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="variance unfavorable">
+                        <div class="variance-info">
+                            <div class="variance-name">Sales Revenue - Services</div>
+                            <div class="variance-explanation">Service revenue fell short by 6.3% ($60k). Possible causes: delayed project starts, customer churn, or sales pipeline gaps</div>
+                            
+                            <div style="margin-top: 5px; font-size: 12px; font-weight: 600; color: #333;">
+                                Action: Review service backlog and renewal rates. Accelerate sales pipeline conversion
+                            </div>
+                            
+                        </div>
+                        <div class="variance-amount">
+                            -6.3%
+                            <div style="font-size: 13px; font-weight: normal; color: #666;">
+                                $-60,000
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="variance unfavorable">
+                        <div class="variance-info">
+                            <div class="variance-name">Cost of Goods Sold - Materials</div>
+                            <div class="variance-explanation">Materials cost 15.3% over budget - most significant variance. Driven by combination of higher unit prices (supplier increases) and potentially higher material waste/scrap rates</div>
+                            
+                            <div style="margin-top: 5px; font-size: 12px; font-weight: 600; color: #333;">
+                                Action: URGENT: Negotiate with suppliers for better pricing. Conduct material waste analysis
+                            </div>
+                            
+                        </div>
+                        <div class="variance-amount">
+                            -15.3%
+                            <div style="font-size: 13px; font-weight: normal; color: #666;">
+                                $-130,000
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="variance unfavorable">
+                        <div class="variance-info">
+                            <div class="variance-name">IT & Software Licenses</div>
+                            <div class="variance-explanation">IT costs 18.8% over budget, likely due to new software subscriptions or license true-ups not captured in original budget</div>
+                            
+                            <div style="margin-top: 5px; font-size: 12px; font-weight: 600; color: #333;">
+                                Action: Review all SaaS subscriptions. Optimize license counts and eliminate unused tools
+                            </div>
+                            
+                        </div>
+                        <div class="variance-amount">
+                            -18.8%
+                            <div style="font-size: 13px; font-weight: normal; color: #666;">
+                                $-15,000
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="variance unfavorable">
+                        <div class="variance-info">
+                            <div class="variance-name">Marketing & Advertising</div>
+                            <div class="variance-explanation">Marketing overspent by 20%, possibly supporting product launch campaigns or responding to competitive pressure</div>
+                            
+                            <div style="margin-top: 5px; font-size: 12px; font-weight: 600; color: #333;">
+                                Action: Measure campaign ROI. Cut low-performing channels and reallocate budget
+                            </div>
+                            
+                        </div>
+                        <div class="variance-amount">
+                            -20.0%
+                            <div style="font-size: 13px; font-weight: normal; color: #666;">
+                                $-30,000
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="variance unfavorable">
+                        <div class="variance-info">
+                            <div class="variance-name">Professional Fees</div>
+                            <div class="variance-explanation">Professional fees 25% over budget - likely unplanned legal/consulting work. May relate to M&A, litigation, or compliance projects</div>
+                            
+                            <div style="margin-top: 5px; font-size: 12px; font-weight: 600; color: #333;">
+                                Action: Review SOWs for all professional service providers. Approve large engagements in advance
+                            </div>
+                            
+                        </div>
+                        <div class="variance-amount">
+                            -25.0%
+                            <div style="font-size: 13px; font-weight: normal; color: #666;">
+                                $-15,000
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div style="margin-top: 15px; padding: 12px; background: #f8f9fa; border-radius: 5px; font-size: 14px;">
+                        <strong>Summary:</strong> Overall variance story: Strong product revenue (+11.4%) offset by service shortfall (-6.3%), resulting in 6.1% revenue beat. However, COGS significantly exceeded plan (-11.4%), primarily due to material cost inflation. OpEx also ran over budget (-7.9%), driven by marketing, IT, and professional fees. Net result: Operating profit missed budget by 11.9% despite revenue growth - a margin compression story requiring immediate cost control action.
+                    </div>
+                    
+                
+            </div>
+        </div>
+
+        <div class="footer">
+            Powered by Claude (2050 output tokens) |
+            SAP FI/CO Analysis Agent |
+            Generated 2026-04-15 13:05:45
+        </div>
+    </div>
+</body>
+</html>
+        
