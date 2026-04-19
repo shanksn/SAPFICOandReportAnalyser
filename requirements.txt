@@ -9,3 +9,6 @@ llama-parse
 llama-index
 llama-index-embeddings-huggingface
 sentence-transformers
+
+# RAG with Qdrant vector store (optional - for multi-document analysis)
+qdrant-client==1.7.0
